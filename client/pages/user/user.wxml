@@ -1,5 +1,46 @@
 <!--pages/user/user.wxml-->
-<image class="bg" src="/images/bg.png"></image>
+
+<view class='main-wrapper'>
+
+  <view wx:if="{{!userInfo}}">
+    <view class='login-wrapper'>
+      <!-- <view class='button-wrapper' bindtap="onTapLogin"> -->
+      <button wx:if="{{IDAuthType==0}}" class="button-wrapper" open-type='getUserInfo' bindgetuserinfo='onTapLogin'>
+        <image class='button-icon' src='../../images/person.png' mode='aspectFill'></image>
+        <view class='button-text'>登录</view> 
+      </button>
+      <button wx:elif="{{IDAuthType==1}}" class="button-wrapper" open-type='openSetting' bindopensetting="onTapLogin">
+        <image class='button-icon' src='../../images/person.png' mode='aspectFill'></image>
+        <view class='button-text'>登录</view> 
+      </button>
+      <!-- </view> -->
+    </view>
+  </view>
+  <view wx:else class='scroll-wrapper'>
+    <scroll-view scroll-y style="height: 100%;">
+      <view wx:if="{{chooseMe===false}}" class='top-selecter' bindtap="topSelect" data-status="me">{{chooseTitle}}</view>
+      <view wx:elif="{{chooseMe}}" class='top-selecter' bindtap="topSelect" data-status="star">{{chooseTitle}}</view>
+    </scroll-view>  
+  </view>
+
+<!-- <navigator class='poster' url="/pages/movie-detail/movie-detail?id={{recommandMovie.recommandMovieId}}">
+  <view class='image-wrapper'>
+    <image class='home-movie-image' src='{{recommandMovie.recommandMovieImg}}' mode='aspectFill'></image>
+  </view>  
+  <view class='home-movie-name'>{{recommandMovie.recommandMovieName}}</view>
+</navigator>
+<view class='comment-meta'>
+  <image class='user-head' src='{{comment.userAvatar}}' mode='aspectFill'></image>
+  <view class='home-movie-comment'>{{comment.userName}}给你推荐了一部电影</view>
+</view> -->
+
+  <navigator class='bottom-wrapper' url="/pages/home/home">
+    <view class='button-text'>返回首页</view>
+  </navigator>
+</view>
+
+
+<!-- <image class="bg" src="/images/bg.png"></image>
 <view wx:if="{{!userInfo}}">
   <view class="unlogin-card">
     <view class="unlogin-head"></view>
@@ -27,4 +68,4 @@
       <image class="option-arrow" src="/images/grey-arrow.png"></image>
     </view>
   </view>
-</view>
+</view> -->

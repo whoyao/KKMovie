@@ -1,6 +1,11 @@
 // pages/user/user.js
 const app = getApp()
 
+const titleMap = {
+  'star': '收藏的影评▽',
+  'me': '我的影评▽',
+}
+
 Page({
 
   /**
@@ -8,23 +13,18 @@ Page({
    */
   data: {
     userInfo: null,
-    locationAuthType: app.data.locationAuthType
+    IDAuthType: app.data.IDAuthType,
+    chooseMe: false,
+    chooseTitle: '收藏的影评▽'
   },
 
-  onTapAddress() {
-    wx.showToast({
-      icon: 'none',
-      title: '此功能暂未开放'
+  topSelect(e) {
+    var currentStatus = e.currentTarget.dataset.status;
+    this.setData({
+      chooseMe: currentStatus === 'me' ? true : false,
+      chooseTitle: titleMap[currentStatus]
     })
   },
-
-  onTapKf() {
-    wx.showToast({
-      icon: 'none',
-      title: '此功能暂未开放'
-    })
-  },
-
 
   /**
    * 生命周期函数--监听页面加载
@@ -38,13 +38,12 @@ Page({
       success: ({ userInfo }) => {
         this.setData({
           userInfo,
-          locationAuthType: app.data.locationAuthType
+          IDAuthType: app.data.IDAuthType
         })
+        console.log(this.data.userInfo)
       },
       error: () => {
-        this.setData({
-          locationAuthType: app.data.locationAuthType
-        })
+        IDAuthType: app.data.IDAuthType
       }
     })
   },
@@ -62,7 +61,7 @@ Page({
   onShow: function () {
     // 同步授权状态
     this.setData({
-      locationAuthType: app.data.locationAuthType
+      IDAuthType: app.data.IDAuthType
     })
     app.checkSession({
       success: ({ userInfo }) => {

@@ -1,10 +1,56 @@
 {
-	"miniprogramRoot": "./client",
-	"qcloudRoot": "./server",
+	"miniprogramRoot": "client/",
+	"cloudfunctionRoot": "cloud/functions/",
+	"qcloudRoot": "server/",
 	"setting": {
 		"newFeature": true
 	},
 	"appid": "wx2fc2c46aaeef20c5",
 	"projectname": "%E4%BE%83%E4%BE%83%E7%94%B5%E5%BD%B1",
-	"condition": {}
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 3,
+			"list": [
+				{
+					"id": 0,
+					"name": "detailWithQuery",
+					"pathName": "pages/movie-detail/movie-detail",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "detailWithQuery",
+					"pathName": "pages/movie-list/movie-list",
+					"query": ""
+				},
+				{
+					"id": 2,
+					"name": "commentEdit",
+					"pathName": "pages/comment-edit/comment-edit",
+					"query": "id=5c012cbd35b920d5abb7522b&name=复仇者联盟3：无限战争&image=https://6d6f-movie-b74c50-1251756384.tcb.qcloud.la/movie_poster/p2517753454.jpg"
+				},
+				{
+					"id": -1,
+					"name": "user",
+					"pathName": "pages/user/user",
+					"query": ""
+				}
+			]
+		}
+	}
 }

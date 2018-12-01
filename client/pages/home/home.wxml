@@ -1,28 +1,24 @@
 <!--pages/home/home.wxml-->
-<image src='/images/bg.png' class='bg'></image>
-<view class='hot-card'>
-  <view class='hot-name'>
-    <image class='hot-name-line' src='/images/line-red.png'></image>
-    <view class='hot-name-text'>{{productList[0].name}}</view>
-    <image class='hot-name-line' src='/images/line-red.png'></image>
-  </view>
-  <image class='hot-info' src='/images/discount.png'></image>
-  <image class='hot-image' src='{{productList[0].image}}'></image>
-</view>
-<view class='list-title'>
-  <image class='list-title-line' src='/images/line-black.png'></image>
-  <view class='list-title-text'>春季推荐</view>
-  <image class='list-title-line' src='/images/line-black.png'></image>
+<view class='main-wrapper'>
+<navigator class='poster' url="/pages/movie-detail/movie-detail?id={{recommandMovie.recommandMovieId}}">
+  <view class='image-wrapper'>
+    <image class='home-movie-image' src='{{recommandMovie.recommandMovieImg}}' mode='aspectFill'></image>
+  </view>  
+  <view class='home-movie-name'>{{recommandMovie.recommandMovieName}}</view>
+</navigator>
+<view class='comment-meta'>
+  <image class='user-head' src='{{comment.userAvatar}}' mode='aspectFill'></image>
+  <view class='home-movie-comment'>{{comment.userName}}给你推荐了一部电影</view>
 </view>
 
-<view class='product-row' wx:for='{{productList}}' wx:key='id' wx:if='{{index%2 === 1}}'>
-  <navigator class='product-card' wx:for='{{[productList[index], productList[index+1]]}}' wx:key='id' wx:for-index='pindex' wx:for-item='pitem' url="/pages/detail/detail?id={{pitem.id}}">
-    <image class='product-image' src='{{pitem.image}}' mode='widthFix'></image>
-    <view class='product-name'>{{pitem.name}}</view>
-    <view class='product-meta'>
-      <view class='product-money'>￥</view>
-      <view class='product-price'>{{pitem.price}}</view>
-      <view class='product-add' catchtap='addToTrolley' data-id="{{pitem.id}}">+</view>
-    </view>
-  </navigator>
+<view class='bottom-wrapper'>
+<navigator class='button-wrapper' url="/pages/movie-list/movie-list">
+  <image class='button-icon' src='../../images/hot.png' mode='aspectFill'></image>
+  <view class='button-text'>热门</view>
+</navigator>
+<navigator class='button-wrapper' url="/pages/user/user">
+  <image class='button-icon' src='../../images/person.png' mode='aspectFill'></image>
+  <view class='button-text'>我的</view>
+</navigator>
+</view>
 </view>

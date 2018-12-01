@@ -1,34 +1,45 @@
-<!--pages/detail/detail.wxml-->
-<view class='product-card'>
-  <image class='product-image' src='{{product.image}}'></image>
-  <view class='product-name'>{{product.name}}</view>
-  <view class='product-source'>{{product.source}}</view>
-  <view class='product-meta'>
-    <view class='product-money'>￥</view>
-    <view class='prodct-price'>{{product.price}}</view>
-  </view>
-</view>
-<view class='info-card'>
-  <view class='advantage-list'>
-    <view class='advantage-item'>
-      <image class='advantage-icon' src='/images/check-yellow.png'></image>
-      <view class='advantage-text'>7天免费退货</view>
-    </view>
-    <view class='advantage-item'>
-      <image class='advantage-icon' src='/images/check-yellow.png'></image>
-      <view class='advantage-text'>24小时内发货并配送运费险</view>
+<!--pages/home/home.wxml-->
+<view class='main-wrapper'>
+  <view class='center-wrapper'>
+    <view class='bottom-wrapper'>
+      <view class='button-wrapper'>
+        <image class='button-icon' src='../../images/eye.png' mode='aspectFill'></image>
+        <view class='button-text'>查看影评</view>
+      </view>
+      <view class='button-wrapper' bindtap="popMenu" data-status="open">
+        <image class='button-icon' src='../../images/comments.png' mode='aspectFill'></image>
+        <view class='button-text'>添加影评</view>
+      </view>
     </view>
   </view>
-  <view class='comment-entry' bindtap='onTapCommentEntry'>
-    <view class='comment-btn'>
-      <view class='comment-title'>已买评价</view>
-      <view class='comment-count'>{{product.commentCount}}条</view>
-      <image class='comment-arrow' src='/images/grey-arrow.png'></image>
-    </view>
-    <view class='comment-preview'>{{product.firstComment.content}}</view>
+  <view class='poster-wrapper'>
+    <image class='poster' src='{{movieDetail.movieImg}}' mode='widthFix'></image>
   </view>
-</view>
-<view class='opr-cnt'>
-  <view class='opr-trolley' bindtap='addToTrolley'>加入购物车</view>
-  <view class='opr-buy' bindtap='buy'>立即购买</view>
+  <view class='text-wrapper'>
+    <view class='movie-name'>{{movieDetail.movieName}}</view>
+    <view class='movie-desc'>{{movieDetail.movieDescribe}}</view>
+  </view>
+
+  <block wx:if="{{showMenu===true}}">
+    <view class="cover_wrapper">
+      <view class="transparent_wrapper" bindtap="popMenu" data-status="close"></view>
+      <view class="cover_bottom_wrapper">
+        <view class="cover_first_wrapper">
+          <view class="cover_first_in_wrapper">
+            <view class="cover_button_wrapper" bindtap="pageTrans" data-status="text">
+              <view class="cover_text_wrapper">文字</view>
+            </view>
+          </view>
+          <view class="cover_first_in_wrapper">
+            <view class="cover_button_wrapper" bindtap="pageTrans" data-status="audio">
+              <view class="cover_text_wrapper">音频</view>
+            </view>
+          </view>
+        </view>
+        <view class="cover_second_wrapper" bindtap="popMenu" data-status="close">
+          <view class="cover_text_wrapper">取消</view>
+        </view>
+      </view>
+    </view>
+  </block>
 </view>

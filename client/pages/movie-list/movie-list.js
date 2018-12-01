@@ -1,7 +1,7 @@
-// pages/order/order.js
+// pages/movie-list/movie-list.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
-const config = require('../../config')
-const app = getApp()
+const config = require('../../config.js')
+const db = wx.cloud.database()
 
 Page({
 
@@ -9,70 +9,48 @@ Page({
    * 页面的初始数据
    */
   data: {
-    userInfo: null,
-    locationAuthType: app.data.locationAuthType,
-    orderList: [], // 订单列表
+    movieList: '',
+    comment: '',
   },
+
+  getMovie(callback) {
+    wx.showLoading({
+      title: '加载中...',
+    })
+
+    db.collection('movie').get({
+      success: res => {
+        this.setData({
+          movieList: res.data,
+        })
+        console.log('[数据库] [查询记录] 成功: ', res)
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '数据获取失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+
+    wx.hideLoading()
+
+    let comment = { userName: '刘研', userAvatar: '../../images/images/p2517753454.jpg', commentId: '11111' }
+
+    this.setData({
+      comment: comment
+    })
+
+    callback && callback()
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
-  },
-
-  onTapLogin: function () {
-    app.login({
-      success: ({ userInfo }) => {
-        this.setData({
-          userInfo,
-          locationAuthType: app.data.locationAuthType
-        })
-      },
-      error: () => {
-        this.setData({
-          locationAuthType: app.data.locationAuthType
-        })
-      }
-    })
-
-    this.getOrder()
-  },
-
-  getOrder() {
-    wx.showLoading({
-      title: '刷新订单数据...',
-    })
-
-    qcloud.request({
-      url: config.service.orderList,
-      login: true,
-      success: result => {
-        console.log("123");
-        wx.hideLoading()
-
-        let data = result.data
-        console.log(data)
-        if (!data.code) {
-          this.setData({
-            orderList: data.data
-          })
-        } else {
-          wx.showToast({
-            icon: 'none',
-            title: '刷新订单数据失败',
-          })
-        }
-      },
-      fail: () => {
-        wx.hideLoading()
-
-        wx.showToast({
-          icon: 'none',
-          title: '刷新订单数据失败',
-        })
-      }
-    })
+    this.getMovie()
   },
 
   /**
@@ -86,18 +64,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    // 同步授权状态
-    this.setData({
-      locationAuthType: app.data.locationAuthType
-    })
-    app.checkSession({
-      success: ({ userInfo }) => {
-        this.setData({
-          userInfo
-        })
-        this.getOrder()
-      }
-    })
+
   },
 
   /**
@@ -118,7 +85,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.getMovie(wx.stopPullDownRefresh())
   },
 
   /**
