@@ -1,22 +1,39 @@
 <!--pages/comment-edit/comment-edit.wxml-->
 <view class='main-wrapper'>
-  <view class='center-wrapper'></view>
+  <view wx:if="{{editFinish===false}}" class='center-wrapper'></view>
+  <view wx:else class='center-wrapper2'>
+  <view class='bottom-wrapper2'>
+      <view class='button-wrapper' bindtap='tapReedit'>
+        <image class='button-icon' src='../../images/return.png' mode='aspectFill'></image>
+        <view class='button-text'>返回编辑</view>
+      </view>
+      <view class='button-wrapper' bindtap="tapSend">
+        <image class='button-icon' src='../../images/send.png' mode='aspectFill'></image>
+        <view class='button-text'>发布影评</view>
+      </view>
+    </view>
+  </view>
   <view class='poster-wrapper'>
     <image class='poster' src='{{movieDetail.image}}' mode='widthFix'></image>
   </view>
   <view class='text-wrapper'>
     <view class='movie-name'>{{movieDetail.name}}</view>
-    <textarea class='comment-ipt' placeholder-class='comment-placeholder' placeholder='请输入你的影评内容...' auto-focus maxlength='255' bindinput='onInput'></textarea>
-  </view>
+    <textarea wx:if="{{editFinish===false}}" class='comment-ipt' placeholder-class='comment-placeholder' placeholder='请输入你的影评内容...' auto-focus maxlength='255' bindinput='onInput'></textarea>
+    <view wx:else class='comment-wrapper'>
+      <view class='user-wrapper'>
+        <image class='userhead' src='{{userInfo.avatarUrl}}' mode='aspectFill'></image>
+        <view class='username'>{{userInfo.nickName}}的影评</view>
+      </view>
+      <view class='comment-meta-wrapper'>
+        <view class='fenhao'>“</view>
 
-  <view class='voice-wrapper'>
-    <view class='button-wrapper' bindtap="startRecoding">
-        <image class='button-icon' src='../../images/voice.png' mode='aspectFill'></image>
-        <view class='button-text'>录音</view>
+        <view class='comment-detail'>{{commentValue}}</view>
+      </view>
     </view>
   </view>
 
-  <view class='bottom-wrapper'> 
+
+  <view wx:if="{{editFinish===false}}" class='bottom-wrapper' bindtap='tapFinish' data-status='true'> 
     <view class='bottom-text'>完成</view>
   </view>
 

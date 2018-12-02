@@ -1,5 +1,6 @@
 // pages/user/user.js
 const app = getApp()
+const db = app.db_app
 
 const titleMap = {
   'star': '收藏的影评▽',
@@ -8,6 +9,19 @@ const titleMap = {
 
 Page({
 
+ /*
+  userInfo{
+    avatarUrl
+    city
+    country
+    gender
+    language
+    nickName
+    openid
+    province
+  }
+  */
+
   /**
    * 页面的初始数据
    */
@@ -15,7 +29,9 @@ Page({
     userInfo: null,
     IDAuthType: app.data.IDAuthType,
     chooseMe: false,
-    chooseTitle: '收藏的影评▽'
+    chooseTitle: '收藏的影评▽',
+    staredComment: [],
+    myComment: []
   },
 
   topSelect(e) {
@@ -23,6 +39,19 @@ Page({
     this.setData({
       chooseMe: currentStatus === 'me' ? true : false,
       chooseTitle: titleMap[currentStatus]
+    })
+  },
+
+  getUserProfile(userInfo) {
+    let stars = []
+    db.collection('user').doc(userInfo.openid).get({
+      success: function (res) {
+        console.log('[数据库] [查询记录] 成功: ', res.data)
+        let user_info
+      },
+      fail: function (res) {
+        console.err('[数据库] [查询记录] 失败: ', res)
+      }
     })
   },
 
@@ -40,7 +69,7 @@ Page({
           userInfo,
           IDAuthType: app.data.IDAuthType
         })
-        console.log(this.data.userInfo)
+        // console.log(this.data.userInfo)
       },
       error: () => {
         IDAuthType: app.data.IDAuthType

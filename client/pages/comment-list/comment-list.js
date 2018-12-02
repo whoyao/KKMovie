@@ -1,7 +1,8 @@
-// pages/comment/comment.js
+// pages/comment-list/comment-list.js
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
-const config = require('../../config')
-const _ = require('../../utils/util')
+const config = require('../../config.js')
+const db = wx.cloud.database()
+const defaultMovieId = '5c012cbd35b920d5abb7522b'
 
 Page({
 
@@ -9,56 +10,94 @@ Page({
    * 页面的初始数据
    */
   data: {
-    commentList: [], // 评论列表
+    movieId:'',
+    commentList: '',
+    userMap:new Object()
   },
 
-  previewImg(event) {
-    let target = event.currentTarget
-    let src = target.dataset.src
-    let urls = target.dataset.urls
+  /*
+  data:
+  { _id: 
+    comment: 
+    comment_type: 
+    comment_url: 
+    create_time: 
+    movieid:
+    userid:
+    }
+  */
 
-    wx.previewImage({
-      current: src,
-      urls: urls
+  getComment(callback) {
+    wx.showLoading({
+      title: '加载中...',
     })
+
+    let movieId = this.data.movieId ? this.data.movieId : defaultMovieId
+
+    db.collection('comment').where({
+      movieid: movieId,
+    }).get({
+      success: res => {
+        this.setData({
+          commentList: res.data
+        })
+        console.log('[数据库] [查询记录] 成功: ', res)
+        this.updateUserMap()
+      },
+      fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '数据获取失败'
+        })
+        console.error('[数据库] [查询记录] 失败：', err)
+      }
+    })
+    wx.hideLoading()
+
+    // let comment = { userName: '刘研', userAvatar: '../../images/images/p2517753454.jpg', commentId: '11111' }
+
+    // this.setData({
+    //   comment: comment
+    // })
+
+    callback && callback()
   },
 
-  getCommentList(id) {
-    qcloud.request({
-      url: config.service.commentList,
-      data: {
-        product_id: id
-      },
-      success: result => {
-        let data = result.data
-        if (!data.code) {
-          this.setData({
-            commentList: data.data.map(item => {
-              let itemDate = new Date(item.create_time)
-              item.createTime = _.formatTime(itemDate)
-              item.images = item.images ? item.images.split(';;') : []
-              return item
+  updateUserMap(){
+    for (let i = 0; i < this.data.commentList.length; i++) {
+      let openid = this.data.commentList[i].userid
+      if (!this.data.userMap[openid]) {
+        db.collection('user').doc(openid).get({
+          success: res => {
+            let newUserMap = this.data.userMap
+            newUserMap[openid] = res.data
+            this.setData({
+              userMap: newUserMap
             })
-          })
-        }
-      },
-    })
+            console.log('[数据库] [查询记录] 成功: ', res)
+          },
+          fail: err => {
+            wx.showToast({
+              icon: 'none',
+              title: '数据获取失败'
+            })
+            console.error('[数据库] [查询记录] 失败：', err)
+          }
+        })
+      }
+    }
   },
+
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let product = {
-      id: options.id,
-      name: options.name,
-      price: options.price,
-      image: options.image
-    }
     this.setData({
-      product: product
+      movieId: options.id
     })
-    this.getCommentList(product.id)
+    console.log('dsfsfsfs', options)
+    this.getComment()
   },
 
   /**
@@ -93,7 +132,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    // this.getMovie(wx.stopPullDownRefresh())
   },
 
   /**

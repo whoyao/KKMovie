@@ -3,7 +3,7 @@ const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config')
 const db = wx.cloud.database()
 const recorderManager = wx.getRecorderManager()
-
+const app = getApp()
 
 Page({
 
@@ -12,7 +12,9 @@ Page({
    */
   data: {
     movieDetail: '',
-    commentValue: ''
+    commentValue: '',
+    userInfo:'',
+    editFinish: false
   },
 
   uploadImage(cb) {
@@ -54,6 +56,14 @@ Page({
     })
   },
 
+  tapFinish(event) {
+    this.setData({
+      editFinish: event.currentTarget.dataset.status === "true"
+    })
+  },
+
+
+
   startRecoding(event) {
 
     
@@ -92,55 +102,79 @@ Page({
     })
   },
 
-  addComment(event) {
+  addComment() {
     let content = this.data.commentValue
-    if (!content) return
+    if (!content ) {
+      wx.showToast({
+        icon: 'none',
+        title: '内容为空'
+      })
+      return
+    }
+    console.log(this.data.movieId)
+    console.log(this.data.userInfo)
+    if (!this.data.movieDetail.id || !this.data.userInfo) {
+      wx.showToast({
+        icon: 'none',
+        title: '网络错误'
+      })
+      return
+    }
 
     wx.showLoading({
-      title: '正在发表评论'
+      title: '正在发布'
     })
 
-    this.uploadImage(images => {
-      qcloud.request({
-        url: config.service.addComment,
-        login: true,
-        method: 'PUT',
-        data: {
-          images,
-          content,
-          product_id: this.data.product.id
-        },
-        success: result => {
-          wx.hideLoading()
-
-          let data = result.data
-
-          if (!data.code) {
-            wx.showToast({
-              title: '发表评论成功'
-            })
-
-            setTimeout(() => {
-              wx.navigateBack()
-            }, 1500)
-          } else {
-            wx.showToast({
-              icon: 'none',
-              title: '发表评论失败'
-            })
-          }
-        },
-        fail: () => {
-          wx.hideLoading()
-
+    db.collection('comment').add({
+      // data 字段表示需新增的 JSON 数据
+      data: {
+        create_time: db.serverDate(),
+        comment:content,
+        comment_type: "text",
+        movieid: this.data.movieDetail.id,
+        userid: this.data.userInfo.openid,
+        comment_url:''
+      },
+      success: function (res) {
+        // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+        console.log(res)
+        wx.hideLoading()
+        let errMsg = res.errMsg
+        if (errMsg == "collection.add:ok") {
+          wx.showToast({
+            title: '发布成功'
+          })
+          setTimeout(() => {
+            wx.navigateBack({})
+          }, 1500)
+        } else {
           wx.showToast({
             icon: 'none',
-            title: '发表评论失败'
+            title: '发布失败'
           })
         }
-      })
+      },
+      fail: function (res) {
+        wx.hideLoading()
+
+        wx.showToast({
+          icon: 'none',
+          title: '发布失败'
+        })
+      }
     })
   },
+
+  tapReedit(event) {
+    this.setData({
+      editFinish: false
+    })
+  },
+
+  tapSend(event) {
+    this.addComment()
+  },
+
 
   getMovieDetail() {
     wx.showLoading({
@@ -173,12 +207,6 @@ Page({
 
   },
 
-  getQuery(options) {
-    this.setData({
-      movieId: options.id ? options.id : defaultMovieId
-    })
-    this.getMovieDetail();
-  },
 
 
   /**
@@ -192,6 +220,13 @@ Page({
     }
     this.setData({
       movieDetail: detail
+    })
+    app.checkSession({
+      success: ({ userInfo }) => {
+        this.setData({
+          userInfo
+        })
+      }
     })
     console.log(this.data.movieDetail)
   },

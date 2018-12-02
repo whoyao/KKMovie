@@ -4,7 +4,8 @@
     "pages/user/user",
     "pages/movie-detail/movie-detail",
     "pages/movie-list/movie-list",
-    "pages/comment-edit/comment-edit"
+    "pages/comment-edit/comment-edit",
+    "pages/comment-list/comment-list"
   ],
 
   "cloud": true,

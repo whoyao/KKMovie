@@ -1,24 +1,20 @@
-<!--pages/comment/comment.wxml-->
-<view class='product-card'>
-  <image class='product-image' src='{{product.image}}'></image>
-  <view class='product-info'>
-    <view class='product-name'>{{product.name}}</view>
-    <view class='product-price'>￥ {{product.price}}</view>
-  </view>
-</view>
-<view class='comment-list'>
-  <view class='comment-title'>{{commentList.length}}条评价</view>
-  <view class='comment-card' wx:for='{{commentList}}' wx:key='id' wx:for-item='item'>
-    <image class='comment-avatar' src='{{item.avatar}}'></image>
-    <view class='comment-cnt'>
-      <view class='comment-top'>
-        <view class='comment-username'>{{item.username}}</view>
-        <view class="comment-time">{{item.createTime}}</view>
-      </view>
-      <view class='comment-content'>{{item.content}}</view>
-      <view class='preview-list' wx:if='{{item.images.length}}'>
-        <image class='preview-item' wx:for='{{item.images}}' wx:for-item='pitem' wx:key='*this' src='{{pitem}}' bindtap='previewImg' data-src='{{pitem}}' data-urls='{{item.images}}'></image>
-      </view>
+<!--pages/comment-list/comment-list.wxml-->
+<view class='main-wrapper'>
+<view class='scroll-wrapper'>
+<scroll-view scroll-y style="height: 100%;">
+  <navigator class='comment-card' wx:for='{{commentList}}' wx:key='_id' url="/pages/comment-detail/comment-detail?id={{item._id}}">
+    <view class='user-wrapper'>
+      <image class='userhead' src='{{userMap[item.userid].avatar}}' mode='aspectFill'></image>
+      <view class='username'>{{userMap[item.userid].username}}</view>
     </view>
-  </view>
+    <view class='comment-text'>{{item.comment}}</view>
+  </navigator>
+</scroll-view>
+</view>
+
+<view class='bottom-wrapper'>
+  <navigator class='button-wrapper' url="/pages/home/home">
+    <view class='button-text'>返回首页</view>
+  </navigator>
+</view>
 </view>

@@ -61,6 +61,15 @@ Page({
     })
   },
 
+  pageTrans(e) {
+    var currentStatus = e.currentTarget.dataset.status;
+    if(currentStatus === "text"){
+      wx.navigateTo({
+        url: '../../pages/comment-edit/comment-edit' + '?id=' + this.data.movieId + '&name=' + this.data.movieDetail.movieName + '&image=' + this.data.movieDetail.movieImg,
+      })
+    }
+  },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -80,7 +89,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.setData({
+      showMenu: false
+    })
   },
 
   /**

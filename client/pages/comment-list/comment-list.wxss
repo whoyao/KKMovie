@@ -1,98 +1,120 @@
-/* pages/comment/comment.wxss */
-.product-card {
+/* pages/comment-list/comment-list.wxss */
+.main-wrapper {
   display: flex;
-  align-items: center;
-  padding-left: 26rpx;
-  height: 200rpx;
-  background: #FFFFFF;
-}
-
-.product-image {
-  flex-shrink: 0;
-  width: 160rpx;
-  height: 160rpx;
-}
-
-.product-info {
-  flex: 1;
-  padding: 27rpx;
+  width: 100%;
   height: 100%;
-  box-sizing: border-box;
-  font-size: 28rpx;
-  line-height: 40rpx;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:center;
 }
 
-.product-name {
-  color: rgba(29, 29, 38, 0.8);
-}
-
-.product-price {
-  margin-top: 12rpx;
-  font-weight: bold;
-}
-
-.comment-list {
-  margin-top: 16rpx;
-  background: #FFFFFF;
-  box-shadow: 0 2rpx 13rpx 5rpx rgba(0, 0, 0, 0.02);
-}
-
-.comment-title {
-  padding: 25rpx 26rpx 14rpx;
-  font-size: 30rpx;
-  line-height: 42rpx;
-  color: rgba(29, 29, 38, 0.8);
-  font-weight: bold;
-}
 
 .comment-card {
+  height: 25%;
+  width: 100%;
+  padding-left: 10%;
+  padding-right: 10%;
+  margin-bottom: 1%;
+  background-color: #fff;
   display: flex;
-  padding: 30rpx 23rpx 0 26rpx;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  overflow-y: hidden;
 }
 
-.comment-card:last-child .comment-cnt {
-  border-bottom: none;
+.comment-text-wrapper {
+  height: 100%;
+  width: 80%;
+  margin-left: 10%;
+  margin-right: 10%;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
-.comment-avatar {
+.user-wrapper {
+  display: flex;
+  flex-direction: row;
+  margin-top: 10rpx;
+  width: 100%;
+  height: 100rpx;
+  box-sizing: border-box;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.userhead {
   flex-shrink: 0;
-  width: 60rpx;
-  height: 60rpx;
+  height: 75rpx;
+  width: 75rpx;
+  background: #F5E069;
   border-radius: 50%;
 }
 
-.comment-cnt {
-  flex: 1;
-  margin-left: 24rpx;
-  padding-bottom: 30rpx;
-  border-bottom: 1px solid rgba(151, 151, 151, 0.2);
+.username {
+  color: rgb(0, 71, 112);
+  margin-top:22rpx;
+  font-size: 30rpx;
+  flex-shrink: 0;
+  margin-left: 35rpx;
+  opacity: 0.8;
 }
 
-.comment-top {
-  display: flex;
+.comment-text {
   font-size: 25rpx;
-  line-height: 36rpx;
-  color: rgba(29, 29, 38, 0.5);
+  opacity: 0.8;
+  margin-top: 20rpx;
+  text-align: left;
+  width: 85%;
+  height: 40%;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-.comment-username {
-  flex: 1;
-}
-
-.comment-content {
-  font-size: 28rpx;
-  line-height: 40rpx;
-  color: #1D1D26;
-}
-
-.preview-list {
+.button-wrapper {
   display: flex;
-  margin-top: 16rpx;
+  width: 100%;
+  height: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  background:#fff;
 }
 
-.preview-item {
-  margin-right: 10rpx;
-  width: 180rpx;
-  height: 180rpx;
-  border-radius: 10rpx;
+.button-text {
+  color: #899DA6;
+  font-size: 32rpx;
+  flex-shrink: 0;
+  margin-left: 10rpx;
+}
+
+.scroll-wrapper{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  display: flex;
+  width: 100%;
+  height: 91%;
+  flex-direction: column;
+  justify-content: center;
+  align-items:center;
+  background:rgba(255, 255, 255, 0);
+  padding-top: 5%
+}
+
+.bottom-wrapper {
+  position: relative;
+  top: 91%;
+  left: 0%;
+  display: flex;
+  width: 100%;
+  height: 9%;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  background:#fff;
+  border-top:1px dashed #ddd;
 }

@@ -2,10 +2,10 @@
 <view class='main-wrapper'>
   <view class='center-wrapper'>
     <view class='bottom-wrapper'>
-      <view class='button-wrapper'>
+      <navigator class='button-wrapper' url="/pages/comment-list/comment-list?id={{movieId}}">
         <image class='button-icon' src='../../images/eye.png' mode='aspectFill'></image>
         <view class='button-text'>查看影评</view>
-      </view>
+      </navigator>
       <view class='button-wrapper' bindtap="popMenu" data-status="open">
         <image class='button-icon' src='../../images/comments.png' mode='aspectFill'></image>
         <view class='button-text'>添加影评</view>
