@@ -2,7 +2,7 @@
 <view class='main-wrapper'>
   <view wx:if="{{editFinish===false}}" class='center-wrapper'></view>
   <view wx:else class='center-wrapper2'>
-  <view class='bottom-wrapper2'>
+    <view class='bottom-wrapper2'>
       <view class='button-wrapper' bindtap='tapReedit'>
         <image class='button-icon' src='../../images/return.png' mode='aspectFill'></image>
         <view class='button-text'>返回编辑</view>

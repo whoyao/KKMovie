@@ -1,5 +1,4 @@
-/* pages/add-comment/add-comment.wxss */
-/* pages/detail/detail.wxss */
+/* pages/comment-audio/comment-audio.wxss */
 .main-wrapper {
   width: 100%;
   height: 100%;

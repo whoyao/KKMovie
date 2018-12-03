@@ -1,2 +1,40 @@
 <!--pages/comment-detail/comment-detail.wxml-->
-<text>pages/comment-detail/comment-detail.wxml</text>
+<view class='main-wrapper'>
+  <view class='center-wrapper'>
+    <view class='bottom-wrapper'>
+      <view wx:if="{{show_star}}" class='button-wrapper' bindtap='tapStar' data-status='star'>
+        <image class='button-icon' src='../../images/star.png' mode='aspectFill'></image>
+        <view class='button-text'>收藏影评</view>
+      </view>
+      <view wx:else class='button-wrapper' bindtap='tapStar' data-status='unstar'>
+        <image class='button-icon' src='../../images/star-y.png' mode='aspectFill'></image>
+        <view class='button-text'>已收藏</view>
+      </view>
+      <navigator wx:if="{{show_add}}" class='button-wrapper' url="/pages/comment-edit/comment-edit?id={{comment_detail.movieid}}&name={{comment_detail.movie_title}}&&image={{comment_detail.movie_image}}">
+        <image class='button-icon' src='../../images/pen.png' mode='aspectFill'></image>
+        <view class='button-text'>写影评</view>
+      </navigator>
+      <view wx:else class='button-wrapper-hidden'>
+        <image class='button-icon' src='../../images/pen.png' mode='aspectFill'></image>
+        <view class='button-text'>写影评</view>
+      </view>
+    </view>
+  </view>
+  <view class='poster-wrapper'>
+    <image class='poster' src='{{comment_detail.movie_image}}' mode='widthFix'></image>
+  </view>
+  <view class='text-wrapper'>
+    <view class='movie-name'>{{comment_detail.movie_title}}</view>
+    <view class='comment-wrapper'>
+      <view class='user-wrapper'>
+        <image class='userhead' src='{{comment_detail.user_avatar}}' mode='aspectFill'></image>
+        <view class='username'>{{comment_detail.user_nickname}}的影评</view>
+      </view>
+      <view class='comment-meta-wrapper'>
+        <view class='fenhao'>“</view>
+        <view class='comment-detail'>{{comment_detail.comment}}</view>
+      </view>
+    </view>
+  </view>
+
+</view>

@@ -96,7 +96,6 @@ Page({
     this.setData({
       movieId: options.id
     })
-    console.log('dsfsfsfs', options)
     this.getComment()
   },
 

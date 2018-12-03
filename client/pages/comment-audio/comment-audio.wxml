@@ -1,0 +1,26 @@
+<!--pages/comment-audio/comment-audio.wxml-->
+<view class='main-wrapper'>
+  <view class='center-wrapper'></view>
+  <view class='poster-wrapper'>
+    <image class='poster' src='{{movieDetail.image}}' mode='widthFix'></image>
+  </view>
+
+  <view class='text-wrapper'>
+    <view class='movie-name'>{{movieDetail.name}}</view>
+  </view>
+
+  <view class='voice-wrapper'>
+    <button class='button-wrapper' catchtouchstart="startRecoding" catchtouchend="stopRecording">
+    <!-- <view class='button-wrapper' bindtap="startRecoding"> -->
+        <image class='button-icon' src='../../images/voice.png' mode='aspectFill'></image>
+        <view class='button-text'>录音</view>
+    <!-- </view> -->
+    </button>
+  </view>
+
+  <view class='bottom-wrapper'> 
+    <view class='bottom-text'>完成</view>
+  </view>
+
+</view>
+

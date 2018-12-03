@@ -24,7 +24,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 6,
 			"list": [
 				{
 					"id": 0,
@@ -55,6 +55,18 @@
 					"name": "coment-list",
 					"pathName": "pages/comment-list/comment-list",
 					"query": ""
+				},
+				{
+					"id": 5,
+					"name": "coment-detail",
+					"pathName": "pages/comment-detail/comment-detail",
+					"query": "id=5c0160b635b920d5abb77108"
+				},
+				{
+					"id": 6,
+					"name": "coment-audio",
+					"pathName": "pages/comment-audio/comment-audio",
+					"query": "id=5c012cbd35b920d5abb7522b&name=复仇者联盟3：无限战争&image=https://6d6f-movie-b74c50-1251756384.tcb.qcloud.la/movie_poster/p2517753454.jpg"
 				}
 			]
 		}
