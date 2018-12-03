@@ -1,7 +1,7 @@
 <!--pages/user/user.wxml-->
 
 <view class='main-wrapper'>
-
+<view class='main-wrapper'>
   <view wx:if="{{!userInfo}}">
     <view class='login-wrapper'>
       <!-- <view class='button-wrapper' bindtap="onTapLogin"> -->
@@ -17,10 +17,37 @@
     </view>
   </view>
   <view wx:else class='scroll-wrapper'>
-    <scroll-view scroll-y style="height: 100%;">
-      <view wx:if="{{chooseMe===false}}" class='top-selecter' bindtap="topSelect" data-status="me">{{chooseTitle}}</view>
-      <view wx:elif="{{chooseMe}}" class='top-selecter' bindtap="topSelect" data-status="star">{{chooseTitle}}</view>
-    </scroll-view>  
+    <!-- <scroll-view scroll-y style="height: 100%;"> -->
+      <block wx:if="{{chooseMe===false}}">
+        <view class='top-selecter' bindtap="topSelect" data-status="me">{{chooseTitle}}</view>
+        <navigator class='comment-card' wx:for='{{myComment}}' wx:key='_id' url="/pages/comment-detail/comment-detail?id={{item._id}}">
+          <image class='movie-image' src='{{item.movie_image}}' mode='widthFix'></image>
+          <view class='comment-meta-wrapper'>        
+            <view class='movie-name'>{{item.movie_title}}</view>
+            <view class='comment-text'>{{item.comment}}</view>
+            <view class='user-wrapper'>
+              <image class='userhead' src='{{item.user_avatar}}' mode='aspectFill'></image>
+              <view class='username'>{{item.user_nickname}}</view>
+            </view>
+          </view>
+        </navigator>
+      </block>
+      <block wx:if="{{chooseMe}}">
+        <view class='top-selecter' bindtap="topSelect" data-status="star">{{chooseTitle}}</view>
+        <navigator class='comment-card' wx:for='{{staredComment}}' wx:key='_id' url="/pages/comment-detail/comment-detail?id={{item._id}}">
+        <image class='movie-image' src='{{item.movie_image}}' mode='widthFix'></image>
+        <view class='comment-meta-wrapper'>
+            <view class='movie-name'>{{item.movie_title}}</view>
+            <view class='comment-text'>{{item.comment}}</view>
+            <view class='user-wrapper'>
+              <image class='userhead' src='{{item.user_avatar}}' mode='aspectFill'></image>
+              <view class='username'>{{item.user_nickname}}</view>
+            </view>
+          </view>
+        </navigator>
+      </block>
+
+    <!-- </scroll-view>   -->
   </view>
 
 <!-- <navigator class='poster' url="/pages/movie-detail/movie-detail?id={{recommandMovie.recommandMovieId}}">
@@ -34,9 +61,10 @@
   <view class='home-movie-comment'>{{comment.userName}}给你推荐了一部电影</view>
 </view> -->
 
-  <navigator class='bottom-wrapper' url="/pages/home/home">
+  <navigator class='bottom-wrapper' url="/pages/home/home" open-type='redirect'>
     <view class='button-text'>返回首页</view>
   </navigator>
+</view>
 </view>
 
 

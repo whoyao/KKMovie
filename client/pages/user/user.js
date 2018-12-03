@@ -42,15 +42,40 @@ Page({
     })
   },
 
-  getUserProfile(userInfo) {
-    let stars = []
-    db.collection('user').doc(userInfo.openid).get({
-      success: function (res) {
-        console.log('[数据库] [查询记录] 成功: ', res.data)
-        let user_info
+  refrashPersonPage(){
+    this.refrashPage("me")
+    this.refrashPage("star")
+  },
+
+  refrashPage(options){
+    let functionName = 'getFavirateComment'
+    if (options === "me") {
+      functionName = 'getPersonComment'
+    } else {
+      functionName = 'getFavirateComment'
+    }
+
+    wx.cloud.callFunction({
+      name: functionName,
+      data: { 
+        user_id: this.data.userInfo.openid,
+        user_nickname: this.data.userInfo.nickName,
+        user_avatar: this.data.userInfo.avatarUrl
       },
-      fail: function (res) {
-        console.err('[数据库] [查询记录] 失败: ', res)
+      success: res => {
+        if (functionName === 'getPersonComment') {
+          this.setData({ 
+            staredComment : res.result
+            })
+        } else {
+          this.setData({
+            myComment: res.result
+          })
+        }
+        console.log('[云函数] [', functionName,'] ', res.result)
+      },
+      fail: err => {
+        console.error('[云函数] [', functionName,'] 调用失败', err)
       }
     })
   },
@@ -59,7 +84,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
   },
 
   onTapLogin: function () {
@@ -69,6 +93,7 @@ Page({
           userInfo,
           IDAuthType: app.data.IDAuthType
         })
+        this.refrashPersonPage()
         // console.log(this.data.userInfo)
       },
       error: () => {
@@ -97,6 +122,7 @@ Page({
         this.setData({
           userInfo
         })
+        this.refrashPersonPage()
       }
     })
   },
@@ -119,7 +145,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.refrashPersonPage()
   },
 
   /**
