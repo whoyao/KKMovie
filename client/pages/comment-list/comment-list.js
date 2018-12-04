@@ -3,6 +3,16 @@ const config = require('../../config.js')
 const db = wx.cloud.database()
 const defaultMovieId = '5c012cbd35b920d5abb7522b'
 
+const string_length = 50
+
+function cutString(input_string) {
+  if (input_string.length > string_length) {
+    var newstring = input_string.substring(0, string_length - 2) + "...";
+    return newstring;
+  }
+  return input_string;
+}
+
 Page({
 
   /**
@@ -41,6 +51,7 @@ Page({
           commentList: res.data
         })
         console.log('[数据库] [查询记录] 成功: ', res)
+        this.cutCommentList()
         this.updateUserMap()
       },
       fail: err => {
@@ -60,6 +71,17 @@ Page({
     // })
 
     callback && callback()
+  },
+
+  cutCommentList() {
+    let comment_list = this.data.commentList
+    for (let i = 0; i < comment_list.length; i++) {
+      let all_comment = comment_list[i].comment
+      comment_list[i].comment = cutString(all_comment)
+    }
+    this.setData({
+      commentList : comment_list
+    })
   },
 
   updateUserMap(){

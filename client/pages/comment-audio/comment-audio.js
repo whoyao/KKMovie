@@ -115,7 +115,7 @@ Page({
         movieid: this.data.movieDetail.id,
         userid: this.data.userInfo.openid,
         comment_url: this.data.audio_url,
-        audio_length: timeIng
+        audio_length: this.data.timeIng
       },
       success: function (res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id

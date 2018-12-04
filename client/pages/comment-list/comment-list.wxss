@@ -146,6 +146,7 @@
 
 .player-content-wraper {
   display: flex;
+  height: 50rpx;
   flex-direction: row;
   justify-content: flex-start;
   align-content: center;
@@ -164,9 +165,10 @@
 
 .player-text {
   color: #899DA6;
-  font-size: 38rpx;
+  line-height: 50rpx;
+  font-size: 30rpx;
   flex-shrink: 0;
   margin-left: 25rpx;
-  margin-top: 5rpx;
+  margin-top: 0rpx;
 }
 

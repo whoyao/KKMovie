@@ -233,6 +233,7 @@ button::after {
 
 .player-content-wraper {
   display: flex;
+  height: 70rpx;
   flex-direction: row;
   justify-content: flex-start;
   align-content: center;
@@ -251,9 +252,10 @@ button::after {
 
 .player-text {
   color: #899DA6;
+  line-height: 70rpx;
   font-size: 38rpx;
   flex-shrink: 0;
   margin-left: 25rpx;
-  margin-top: 5rpx;
+  margin-top: 0rpx;
 }
 
