@@ -10,10 +10,12 @@
         <image class='button-icon' src='../../images/star-y.png' mode='aspectFill'></image>
         <view class='button-text'>已收藏</view>
       </view>
-      <navigator wx:if="{{show_add}}" class='button-wrapper' url="/pages/comment-edit/comment-edit?id={{comment_detail.movieid}}&name={{comment_detail.movie_title}}&&image={{comment_detail.movie_image}}">
+      <view wx:if="{{show_add}}" class='button-wrapper' bindtap="popMenu" data-status="open">
+      <!-- <navigator wx:if="{{show_add}}" class='button-wrapper' url="/pages/comment-edit/comment-edit?id={{comment_detail.movieid}}&name={{comment_detail.movie_title}}&&image={{comment_detail.movie_image}}"> -->
         <image class='button-icon' src='../../images/pen.png' mode='aspectFill'></image>
         <view class='button-text'>写影评</view>
-      </navigator>
+      <!-- </navigator> -->
+      </view>
       <view wx:else class='button-wrapper-hidden'>
         <image class='button-icon' src='../../images/pen.png' mode='aspectFill'></image>
         <view class='button-text'>写影评</view>
@@ -37,4 +39,26 @@
     </view>
   </view>
 
+  <block wx:if="{{showMenu===true}}">
+    <view class="cover_wrapper">
+      <view class="transparent_wrapper" bindtap="popMenu" data-status="close"></view>
+      <view class="cover_bottom_wrapper">
+        <view class="cover_first_wrapper">
+          <view class="cover_first_in_wrapper">
+            <view class="cover_button_wrapper" bindtap="pageTrans" data-status="text">
+              <view class="cover_text_wrapper">文字</view>
+            </view>
+          </view>
+          <view class="cover_first_in_wrapper">
+            <view class="cover_button_wrapper" bindtap="pageTrans" data-status="audio">
+              <view class="cover_text_wrapper">音频</view>
+            </view>
+          </view>
+        </view>
+        <view class="cover_second_wrapper" bindtap="popMenu" data-status="close">
+          <view class="cover_text_wrapper">取消</view>
+        </view>
+      </view>
+    </view>
+  </block>
 </view>

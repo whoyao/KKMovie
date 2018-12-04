@@ -14,6 +14,7 @@ Page({
     userInfo: '',
     show_star: true,
     show_add: true,
+    showMenu: false
   },
 
   getCommentDetail() {
@@ -95,6 +96,26 @@ Page({
     }
   },
 
+  popMenu(e) {
+    var currentStatus = e.currentTarget.dataset.status;
+    this.setData({
+      showMenu: currentStatus === 'open' ? true : false
+    })
+  },
+  
+  pageTrans(e) {
+    var currentStatus = e.currentTarget.dataset.status;
+    if (currentStatus === "text") {
+      wx.navigateTo({
+        url: '../../pages/comment-edit/comment-edit' + '?id=' + this.data.comment_detail.movieid + '&name=' + this.data.comment_detail.movie_title + '&image=' + this.data.comment_detail.movie_image,
+      })
+    } else if (currentStatus === "audio") {
+      wx.navigateTo({
+        url: '../../pages/comment-audio/comment-audio' + '?id=' + this.data.comment_detail.movieid + '&name=' + this.data.comment_detail.movie_title + '&image=' + this.data.comment_detail.movie_image,
+      })
+    }
+  },
+
   /**
    * 生命周期函数--监听页面加载
    */
@@ -124,6 +145,9 @@ Page({
    */
   onShow: function () {
     this.getButtonStatus()
+    this.setData({
+      showMenu:false
+    })
   },
 
   /**

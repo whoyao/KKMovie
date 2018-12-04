@@ -67,6 +67,10 @@ Page({
       wx.navigateTo({
         url: '../../pages/comment-edit/comment-edit' + '?id=' + this.data.movieId + '&name=' + this.data.movieDetail.movieName + '&image=' + this.data.movieDetail.movieImg,
       })
+    } else if (currentStatus === "audio") {
+      wx.navigateTo({
+        url: '../../pages/comment-audio/comment-audio' + '?id=' + this.data.movieId + '&name=' + this.data.movieDetail.movieName + '&image=' + this.data.movieDetail.movieImg,
+      })
     }
   },
 

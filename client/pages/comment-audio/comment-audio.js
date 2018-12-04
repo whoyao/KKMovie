@@ -2,6 +2,7 @@
 const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config')
 const db = wx.cloud.database()
+const app = getApp()
 // const recorderManager = wx.getRecorderManager()
 
 
@@ -13,11 +14,15 @@ Page({
   data: {
     movieDetail: '',
     commentValue: '',
-    audio_url: ''
+    audio_url: '',
+    timestart:'',
+    timeIng:'',
+    voiceTempPath:'',
+    userInfo:''
   },
 
 
-  startRecoding(event) {
+  startRecording(event) {
     var timestart = event.timeStamp
     var recorderManager = wx.getRecorderManager();
     const options = {
@@ -33,53 +38,37 @@ Page({
   },
 
 
-  addComment(event) {
-    let content = this.data.commentValue
-    if (!content) return
+  stopRecording(event) {
+    var recorderManager = wx.getRecorderManager();//获取全局唯一的录音管理器
+    var timestart = this.data.timestart;
+    var timeout = event.timeStamp;
+    var timeIng = 0;//录音的时长
+    timeIng = timeout - timestart;
 
-    wx.showLoading({
-      title: '正在发表评论'
-    })
-
-    this.uploadImage(images => {
-      qcloud.request({
-        url: config.service.addComment,
-        login: true,
-        method: 'PUT',
-        data: {
-          images,
-          content,
-          product_id: this.data.product.id
-        },
-        success: result => {
-          wx.hideLoading()
-
-          let data = result.data
-
-          if (!data.code) {
-            wx.showToast({
-              title: '发表评论成功'
-            })
-
-            setTimeout(() => {
-              wx.navigateBack()
-            }, 1500)
-          } else {
-            wx.showToast({
-              icon: 'none',
-              title: '发表评论失败'
-            })
-          }
-        },
-        fail: () => {
-          wx.hideLoading()
-
-          wx.showToast({
-            icon: 'none',
-            title: '发表评论失败'
-          })
-        }
+    recorderManager.onStop((res) => {
+      var tempFilePath = res.tempFilePath;// 文件临时路径
+      console.log('[录音]文件获取成功，准备上传', tempFilePath, timeIng)
+      this.setData({
+        timeIng: timeIng,
+        voiceTempPath: tempFilePath
       })
+      this.startUpload()
+    })
+  },
+
+  toPreview(){
+
+  },
+
+  startUpload(callback){
+    wx.cloud.uploadFile({
+      cloudPath: 'comment_audio/test.mp3', // 上传至云端的路径
+      filePath: this.data.voiceTempPath, // 小程序临时文件路径
+      success: res => {
+        // 返回文件 ID
+        console.log(res.fileID)
+      },
+      fail: console.error
     })
   },
 
@@ -109,7 +98,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    app.checkSession({
+      success: ({ userInfo }) => {
+        this.setData({
+          userInfo
+        })
+      }
+    })
   },
 
   /**

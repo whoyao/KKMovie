@@ -104,8 +104,12 @@
   margin-right: 3.5%;
   margin-top: 25%;
   margin-bottom: 25%;
-  border:1px solid rgba(160, 182, 201,0.8);
+  /* border:1px solid rgba(160, 182, 201,0.8); */
   border-radius: 5px;
+}
+
+.voice-wrapper button.button-hover {
+  background-color: grey;
 }
 
 .button-icon {
@@ -135,14 +139,6 @@
   width: 35%;
 }
 
-.comment-meta {
-  display: flex;
-  margin-top: 15rpx;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-}
-
 .movie-name {
   font-weight: bold;
   font-size: 40rpx;
@@ -151,110 +147,58 @@
   text-align: center;
 }
 
-.movie-desc {
-  font-size: 30rpx;
-  opacity: 0.8;
-  margin-top: 25rpx;
-  text-align: left;
-  overflow-y: auto;
-}
-
-
-
-
-
-
-
-
-
-
-.product-card {
+.user-wrapper {
   display: flex;
-  align-items: center;
-  padding-left: 26rpx;
-  height: 200rpx;
-  background: #FFFFFF;
-}
-
-.product-image {
-  flex-shrink: 0;
-  width: 160rpx;
-  height: 160rpx;
-}
-
-.product-info {
-  flex: 1;
-  padding: 27rpx;
-  height: 100%;
+  flex-direction: row;
+  margin-top: 10rpx;
+  width: 100%;
+  height: 100rpx;
   box-sizing: border-box;
-  font-size: 28rpx;
-  line-height: 40rpx;
+  align-content: center;
+  justify-content: flex-start;
 }
 
-.product-name {
-  color: rgba(29, 29, 38, 0.8);
+.comment-meta-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 65%;
+  box-sizing: border-box;
+  align-content: flex-start;
+  flex-wrap: nowrap;
 }
 
-.product-price {
-  margin-top: 12rpx;
-  font-weight: bold;
-}
-
-.comment-cnt {
-  margin: 29rpx 27rpx 0;
-  padding-bottom: 26rpx;
-  background: #FFFFFF;
-  box-shadow: 0 2rpx 13rpx 5rpx rgba(0, 0, 0, 0.02);
-  border-radius: 10rpx;
-}
-
-.comment-ipt {
+.comment-wrapper {
   width: 100%;
   height: 85%;
-  padding: 29rpx 34rpx;
   box-sizing: border-box;
-  font-size: 28rpx;
-  line-height: 40rpx;
-  text-align: center;
 }
 
-.comment-placeholder {
-  color: rgba(29, 29, 38, 0.4);
-}
-
-.preview-cnt {
-  display: flex;
-  margin-top: 29rpx;
-  margin-left: 29rpx;
-}
-
-.preview-image {
-  margin-right: 10rpx;
-  width: 180rpx;
-  height: 180rpx;
-  border-radius: 5rpx;
-}
-
-.opr-upload {
-  display: block;
-  margin-top: 29rpx;
-  margin-left: 29rpx; 
-  width: 43rpx;
-  height: 43rpx;
-}
-
-.comment-btn {
-  margin: 34rpx auto;
-  width: 250rpx;
-  height: 80rpx;
-  line-height: 80rpx;
-  text-align: center;
+.userhead {
+  flex-shrink: 0;
+  height: 100rpx;
+  width: 100rpx;
   background: #F5E069;
-  border-radius: 10rpx;
-  font-size: 30rpx;
-  color: #34373D;
+  border-radius: 50%;
 }
 
-.comment-btn.dis {
-  color: rgba(52, 55, 61, 0.5);
+.username {
+  color: rgb(0, 71, 112);
+  margin-top:35rpx;
+  font-size: 30rpx;
+  flex-shrink: 0;
+  margin-left: 35rpx;
+  opacity: 0.8;
 }
+
+.fenhao {
+  text-align: center;
+  color: rgb(0, 71, 112);
+  font-size: 75rpx;
+  height: 200rpx;
+  width: 100rpx;
+  flex-shrink: 0;
+  margin-top: 2%;
+  opacity: 0.8;
+}
+

@@ -1,13 +1,13 @@
 {
   "pages":[
     "pages/home/home",
-    "pages/user/user",
-    "pages/movie-detail/movie-detail",
-    "pages/movie-list/movie-list",
     "pages/comment-audio/comment-audio",
     "pages/comment-edit/comment-edit",
     "pages/comment-list/comment-list",
-    "pages/comment-detail/comment-detail"
+    "pages/comment-detail/comment-detail",
+    "pages/user/user",
+    "pages/movie-detail/movie-detail",
+    "pages/movie-list/movie-list"
   ],
 
   "cloud": true,
