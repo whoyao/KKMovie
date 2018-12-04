@@ -34,7 +34,25 @@
       </view>
       <view class='comment-meta-wrapper'>
         <view class='fenhao'>“</view>
-        <view class='comment-detail'>{{comment_detail.comment}}</view>
+        <block wx:if="{{comment_detail.comment_type === 'text'}}">
+          <view class='comment-detail'>{{comment_detail.comment}}</view>
+        </block>
+        <block wx:if="{{comment_detail.comment_type === 'audio'}}">
+        <view wx:if='{{!playing}}' class='player-wrapper' bindtap='tapPlay' data-status='play'>
+          <view class='player-bg' style='width:{{playProgress}}%'> </view>
+          <view class='player-content-wraper'> 
+            <image class='player-icon' src='../../images/blue-play.png' mode='aspectFill'></image>
+            <view class='player-text'>{{comment_detail.audio_length}}s</view>
+          </view>
+        </view>
+        <view wx:else class='player-wrapper' bindtap='tapPlay' data-status='pause'>
+          <view class='player-bg' style='width:{{playProgress}}%'> </view>
+          <view class='player-content-wraper'> 
+            <image class='player-icon' src='../../images/bw-play.png' mode='aspectFill'></image>
+            <view class='player-text'>{{comment_detail.audio_length}}s</view>
+          </view>
+        </view>
+        </block>
       </view>
     </view>
   </view>

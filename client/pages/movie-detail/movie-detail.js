@@ -1,5 +1,4 @@
 // pages/home/home.js
-const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
 const defaultMovieId = '5c012cbd35b920d5abb7522b'
 const db = wx.cloud.database()
@@ -13,7 +12,8 @@ Page({
   data: {
     movieDetail: '',
     movieId:'',
-    showMenu: false
+    showMenu: false,
+    show_add: true
   },
 
   getMovieDetail() {
@@ -45,6 +45,25 @@ Page({
 
     wx.hideLoading()
 
+  },
+
+  getButtonStatus() {
+    wx.cloud.callFunction({
+      name: 'getMDButtonStatus',
+      data: {
+        movieid: this.data.movieId
+      },
+      success: res => {
+        this.setData({
+          show_add: res.result.show_add
+        })
+        console.log('[云函数] [getMDButtonStatus] ', res.result)
+        console.log('[show_add] ', this.data.show_add)
+      },
+      fail: err => {
+        console.error('[云函数] [getMDButtonStatus] 调用失败', err)
+      }
+    })
   },
 
   getQuery(options) {
@@ -96,6 +115,7 @@ Page({
     this.setData({
       showMenu: false
     })
+    this.getButtonStatus()
   },
 
   /**

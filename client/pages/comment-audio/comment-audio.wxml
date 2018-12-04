@@ -15,21 +15,37 @@
       <view class='comment-meta-wrapper'>
         <view class='fenhao'>“</view>
 
-        <view class='comment-detail'>{{commentValue}}</view>
+        <view wx:if='{{!playing}}' class='player-wrapper' bindtap='tapPlay' data-status='play'>
+          <view class='player-bg' style='width:{{playProgress}}%'> </view>
+          <view class='player-content-wraper'> 
+            <image class='player-icon' src='../../images/blue-play.png' mode='aspectFill'></image>
+            <view class='player-text'>{{timeIng}}s</view>
+          </view>
+        </view>
+
+        <view wx:else class='player-wrapper' bindtap='tapPlay' data-status='pause'>
+          <view class='player-bg' style='width:{{playProgress}}%'> </view>
+          <view class='player-content-wraper'> 
+            <image class='player-icon' src='../../images/bw-play.png' mode='aspectFill'></image>
+            <view class='player-text'>{{timeIng}}s</view>
+          </view>
+        </view>
+
       </view>
     </view>
+    <view wx:else class='button-text' style='text-align:center;margin-left: 0rpx;margin-top: 50rpx;'>按住开始录音，松开完成</view>
   </view>
 
   <!-- <view id="voicePup" class="show">
       <view id="voiceBox" style="margin-top: -65.2125px">
-          <view id="voiceText">正在聆听中</div>
+          <view id="voiceText">正在聆听中</view>
           <view id="voiceSearchContent">
             <canvas width="358" height="126" style="width: 179px; height: 63px;"></canvas>
-          </div>
-          <view id="voiceSearchTips">还可继续录秒</div>
-      </div>
-      <div id="voiceSearchToast" style="display: none;">没有检测到声音</div>
-  </div> -->
+          </view>
+          <view id="voiceSearchTips">还可继续录秒</view>
+      </view>
+      <view id="voiceSearchToast" style="display: none;">没有检测到声音</view>
+  </view> -->
 
   <view class='voice-wrapper'>
     <button class='button-wrapper' hover-class="button-hover" catchtouchstart="startRecording" catchtouchend="stopRecording">
@@ -40,7 +56,7 @@
     </button>
   </view>
 
-  <view class='bottom-wrapper'> 
+  <view class='bottom-wrapper' bindtap='tapFinish' data-status='true'> 
     <view class='bottom-text'>完成</view>
   </view>
 

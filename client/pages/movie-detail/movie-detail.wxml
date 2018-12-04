@@ -6,7 +6,11 @@
         <image class='button-icon' src='../../images/eye.png' mode='aspectFill'></image>
         <view class='button-text'>查看影评</view>
       </navigator>
-      <view class='button-wrapper' bindtap="popMenu" data-status="open">
+      <view wx:if="{{show_add}}" class='button-wrapper' bindtap="popMenu" data-status="open">
+        <image class='button-icon' src='../../images/comments.png' mode='aspectFill'></image>
+        <view class='button-text'>添加影评</view>
+      </view>
+      <view wx:else class='button-wrapper-hidden' bindtap="popMenu">
         <image class='button-icon' src='../../images/comments.png' mode='aspectFill'></image>
         <view class='button-text'>添加影评</view>
       </view>

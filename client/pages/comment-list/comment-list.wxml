@@ -7,7 +7,18 @@
       <image class='userhead' src='{{userMap[item.userid].avatar}}' mode='aspectFill'></image>
       <view class='username'>{{userMap[item.userid].username}}</view>
     </view>
-    <view class='comment-text'>{{item.comment}}</view>
+    <block wx:if="{{item.comment_type === 'text'}}">
+      <view class='comment-text'>{{item.comment}}</view>
+    </block>
+    <block wx:else>
+      <view class='player-wrapper'>
+        <view class='player-bg'> </view>
+        <view class='player-content-wraper'> 
+          <image class='player-icon' src='../../images/bw-play.png' mode='aspectFill'></image>
+          <view class='player-text'>{{item.audio_length}}s</view>
+        </view>
+      </view>
+    </block>
   </navigator>
 </scroll-view>
 </view>

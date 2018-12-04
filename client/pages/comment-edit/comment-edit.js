@@ -1,5 +1,4 @@
 // pages/add-comment/add-comment.js
-const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config')
 const db = wx.cloud.database()
 const recorderManager = wx.getRecorderManager()
@@ -17,39 +16,6 @@ Page({
     editFinish: false
   },
 
-  uploadImage(cb) {
-    let commentImages = this.data.commentImages
-    let images = []
-
-    if (commentImages.length) {
-      let length = commentImages.length
-      for (let i = 0; i < length; i++) {
-        wx.uploadFile({
-          url: config.service.uploadUrl,
-          filePath: commentImages[i],
-          name: 'file',
-          success: res => {
-            let data = JSON.parse(res.data)
-            length--
-
-            if (!data.code) {
-              images.push(data.data.imgUrl)
-            }
-
-            if (length <= 0) {
-              cb && cb(images)
-            }
-          },
-          fail: () => {
-            length--
-          }
-        })
-      }
-    } else {
-      cb && cb(images)
-    }
-  },
-
   onInput(event) {
     this.setData({
       commentValue: event.detail.value.trim()
@@ -62,45 +28,6 @@ Page({
     })
   },
 
-
-
-  startRecoding(event) {
-
-    
-  },
-
-  chooseImage() {
-    let currentImages = this.data.commentImages
-
-    wx.chooseImage({
-      count: 3,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: res => {
-
-        currentImages = currentImages.concat(res.tempFilePaths)
-
-        let end = currentImages.length
-        let begin = Math.max(end - 3, 0)
-        currentImages = currentImages.slice(begin, end)
-
-        this.setData({
-          commentImages: currentImages
-        })
-
-      },
-    })
-  },
-
-  previewImg(event) {
-    let target = event.currentTarget
-    let src = target.dataset.src
-
-    wx.previewImage({
-      current: src,
-      urls: this.data.commentImages
-    })
-  },
 
   addComment() {
     let content = this.data.commentValue
@@ -137,7 +64,6 @@ Page({
       },
       success: function (res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
-        console.log(res)
         wx.hideLoading()
         let errMsg = res.errMsg
         if (errMsg == "collection.add:ok") {
@@ -153,14 +79,15 @@ Page({
             title: '发布失败'
           })
         }
+        console.log('[数据库] 操作成功', res)
       },
       fail: function (res) {
         wx.hideLoading()
-
         wx.showToast({
           icon: 'none',
           title: '发布失败'
         })
+        console.log('[数据库] 操作失败', res)
       }
     })
   },

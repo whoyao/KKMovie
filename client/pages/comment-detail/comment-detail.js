@@ -2,6 +2,7 @@
 const config = require('../../config')
 const db = wx.cloud.database()
 const app = getApp()
+const myaudio = wx.createInnerAudioContext();
 
 Page({
 
@@ -14,7 +15,28 @@ Page({
     userInfo: '',
     show_star: true,
     show_add: true,
-    showMenu: false
+    showMenu: false,
+    playing: false,
+    playProgress:''
+  },
+
+  getAudio(comment_url) {
+    wx.cloud.getTempFileURL({
+      fileList: [comment_url],
+      success: res => {
+        // fileList 是一个有如下结构的对象数组
+        // [{
+        //    fileID: 'cloud://xxx.png', // 文件 ID
+        //    tempFileURL: '', // 临时文件网络链接
+        //    maxAge: 120 * 60 * 1000, // 有效期
+        // }]
+        myaudio.src = res.fileList[0].tempFileURL
+        console.log('[临时链接] 获取成功', res.fileList[0].tempFileURL)
+      },
+      fail: res => {
+        console.error
+      }
+    })
   },
 
   getCommentDetail() {
@@ -27,6 +49,9 @@ Page({
         this.setData({
           comment_detail: res.result
         })
+        if (this.data.comment_detail.comment_type === "audio") {
+          this.getAudio(this.data.comment_detail.comment_url)
+        }
         console.log('[云函数] [getCommentDetail] ', res.result)
       },
       fail: err => {
@@ -88,6 +113,26 @@ Page({
     })
   },
 
+  tapPlay(event) {
+    if (this.data.comment_detail.comment_type != "audio") {
+      console.log("[播放] comment type error!")
+      return
+    }
+    var currentStatus = event.currentTarget.dataset.status;
+    if (currentStatus === "play") {
+      myaudio.play();
+      console.log('play', myaudio);
+      this.setData({
+        playing: true,
+        playTimeStart: (new Date()).getTime()
+      });
+    } else if (currentStatus === "pause") {
+      myaudio.pause();
+      console.log('pause', myaudio.duration);
+      this.setData({ playing: false });
+    }
+  },
+
   tapStar(event) {
     if (event.currentTarget.dataset.status === "star"){
       this.addStar()
@@ -120,6 +165,24 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    myaudio.onPlay(() => {
+      this.setData({
+        playing: true
+      })
+      console.log('play')
+    })
+    myaudio.onTimeUpdate(() => {
+      let rate = myaudio.currentTime / myaudio.duration * 100
+      this.setData({
+        playProgress: rate
+      })
+    })
+    myaudio.onEnded(() => {
+      this.setData({
+        playing: false,
+        playProgress: 100
+      })
+    })
     this.setData({
       comment_id : options.id
     })

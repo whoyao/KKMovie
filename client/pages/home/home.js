@@ -1,5 +1,4 @@
 // pages/home/home.js
-const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
 const db = wx.cloud.database()
 

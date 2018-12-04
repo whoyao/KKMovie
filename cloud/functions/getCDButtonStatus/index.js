@@ -1,4 +1,5 @@
 // 云函数入口文件
+// 获得 comment-detail 的按钮状态
 const cloud = require('wx-server-sdk')
 
 cloud.init()

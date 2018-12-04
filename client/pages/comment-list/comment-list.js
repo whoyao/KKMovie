@@ -1,5 +1,4 @@
 // pages/comment-list/comment-list.js
-const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js')
 const db = wx.cloud.database()
 const defaultMovieId = '5c012cbd35b920d5abb7522b'

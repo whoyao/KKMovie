@@ -24,7 +24,18 @@
           <image class='movie-image' src='{{item.movie_image}}' mode='widthFix'></image>
           <view class='comment-meta-wrapper'>        
             <view class='movie-name'>{{item.movie_title}}</view>
-            <view class='comment-text'>{{item.comment}}</view>
+            <block wx:if="{{item.comment_type === 'text'}}">
+              <view class='comment-text'>{{item.comment}}</view>
+            </block>
+            <block wx:if="{{item.comment_type === 'audio'}}">
+              <view class='player-wrapper'>
+                <view class='player-bg'> </view>
+                <view class='player-content-wraper'> 
+                  <image class='player-icon' src='../../images/bw-play.png' mode='aspectFill'></image>
+                  <view class='player-text'>{{item.audio_length}}s</view>
+                </view>
+              </view>
+            </block>
             <view class='user-wrapper'>
               <image class='userhead' src='{{item.user_avatar}}' mode='aspectFill'></image>
               <view class='username'>{{item.user_nickname}}</view>
@@ -38,7 +49,18 @@
         <image class='movie-image' src='{{item.movie_image}}' mode='widthFix'></image>
         <view class='comment-meta-wrapper'>
             <view class='movie-name'>{{item.movie_title}}</view>
-            <view class='comment-text'>{{item.comment}}</view>
+            <block wx:if="{{item.comment_type === 'text'}}">
+              <view class='comment-text'>{{item.comment}}</view>
+            </block>
+            <block wx:if="{{item.comment_type === 'audio'}}">
+              <view class='player-wrapper'>
+                <view class='player-bg'> </view>
+                <view class='player-content-wraper'> 
+                  <image class='player-icon' src='../../images/bw-play.png' mode='aspectFill'></image>
+                  <view class='player-text'>{{item.audio_length}}s</view>
+                </view>
+              </view>
+            </block>
             <view class='user-wrapper'>
               <image class='userhead' src='{{item.user_avatar}}' mode='aspectFill'></image>
               <view class='username'>{{item.user_nickname}}</view>
