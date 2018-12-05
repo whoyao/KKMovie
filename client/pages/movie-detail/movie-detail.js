@@ -2,6 +2,7 @@
 const config = require('../../config.js')
 const defaultMovieId = '5c012cbd35b920d5abb7522b'
 const db = wx.cloud.database()
+const app = getApp()
 
 
 Page({
@@ -74,6 +75,11 @@ Page({
   },
 
   popMenu(e) {
+    if (!app.hasValidUserInfo()){
+      wx.navigateTo({
+        url: '../../pages/user/user?need_back=1',
+      })
+    }
     var currentStatus = e.currentTarget.dataset.status;
     this.setData({
       showMenu: currentStatus === 'open' ? true : false

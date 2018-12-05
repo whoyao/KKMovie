@@ -13,7 +13,7 @@
 </view>
 
 <view class='bottom-wrapper'>
-  <navigator class='button-wrapper' url="/pages/home/home" open-type='redirect'>
+  <navigator class='button-wrapper' url="/pages/home/home" open-type='reLaunch'>
     <view class='button-text'>返回首页</view>
   </navigator>
 </view>

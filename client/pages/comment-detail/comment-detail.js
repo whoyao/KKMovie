@@ -40,6 +40,9 @@ Page({
   },
 
   getCommentDetail() {
+    wx.showLoading({
+      title: '加载中...',
+    })
     wx.cloud.callFunction({
       name: 'getCommentDetail',
       data: {
@@ -52,9 +55,15 @@ Page({
         if (this.data.comment_detail.comment_type === "audio") {
           this.getAudio(this.data.comment_detail.comment_url)
         }
+        wx.hideLoading()
         console.log('[云函数] [getCommentDetail] ', res.result)
       },
       fail: err => {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '数据获取失败'
+        })
         console.error('[云函数] [getCommentDetail] 调用失败', err)
       }
     })
@@ -142,6 +151,11 @@ Page({
   },
 
   popMenu(e) {
+    if (!app.hasValidUserInfo()) {
+      wx.navigateTo({
+        url: '../../pages/user/user?need_back=1',
+      })
+    }
     var currentStatus = e.currentTarget.dataset.status;
     this.setData({
       showMenu: currentStatus === 'open' ? true : false

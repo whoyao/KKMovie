@@ -2,7 +2,7 @@
 var config = require('./config')
 var db_app
 
-let UserInfo = null
+var UserInfo = null
 
 const UNPROMPTED = 0
 const UNAUTHORIZED = 1
@@ -156,6 +156,10 @@ App({
         error && error()
       }
     })
+  },
+
+  hasValidUserInfo() {
+    return UserInfo
   },
 
   checkSession({ success, error }) {

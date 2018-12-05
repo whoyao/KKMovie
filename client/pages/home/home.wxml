@@ -1,15 +1,15 @@
 <!--pages/home/home.wxml-->
 <view class='main-wrapper'>
-<navigator class='poster' url="/pages/movie-detail/movie-detail?id={{recommandMovie.recommandMovieId}}">
+<navigator class='poster' url="/pages/movie-detail/movie-detail?id={{recommandMovie.movieid}}">
   <view class='image-wrapper'>
-    <image class='home-movie-image' src='{{recommandMovie.recommandMovieImg}}' mode='aspectFill'></image>
+    <image class='home-movie-image' src='{{recommandMovie.movie_image}}' mode='aspectFill'></image>
   </view>  
-  <view class='home-movie-name'>{{recommandMovie.recommandMovieName}}</view>
+  <view class='home-movie-name'>{{recommandMovie.movie_title}}</view>
 </navigator>
-<view class='comment-meta'>
-  <image class='user-head' src='{{comment.userAvatar}}' mode='aspectFill'></image>
-  <view class='home-movie-comment'>{{comment.userName}}给你推荐了一部电影</view>
-</view>
+<navigator class='comment-meta' url="/pages/comment-detail/comment-detail?id={{recommandMovie._id}}">
+  <image class='user-head' src='{{recommandMovie.user_avatar}}' mode='aspectFill'></image>
+  <view class='home-movie-comment'>{{recommandMovie.user_nickname}}给你推荐了一部电影</view>
+</navigator>
 
 <view class='bottom-wrapper'>
 <navigator class='button-wrapper' url="/pages/movie-list/movie-list">

@@ -72,50 +72,10 @@
     <!-- </scroll-view>   -->
   </view>
 
-<!-- <navigator class='poster' url="/pages/movie-detail/movie-detail?id={{recommandMovie.recommandMovieId}}">
-  <view class='image-wrapper'>
-    <image class='home-movie-image' src='{{recommandMovie.recommandMovieImg}}' mode='aspectFill'></image>
-  </view>  
-  <view class='home-movie-name'>{{recommandMovie.recommandMovieName}}</view>
-</navigator>
-<view class='comment-meta'>
-  <image class='user-head' src='{{comment.userAvatar}}' mode='aspectFill'></image>
-  <view class='home-movie-comment'>{{comment.userName}}给你推荐了一部电影</view>
-</view> -->
 
-  <navigator class='bottom-wrapper' url="/pages/home/home" open-type='redirect'>
+  <navigator class='bottom-wrapper' url="/pages/home/home" open-type='reLaunch'>
     <view class='button-text'>返回首页</view>
   </navigator>
 </view>
 </view>
 
-
-<!-- <image class="bg" src="/images/bg.png"></image>
-<view wx:if="{{!userInfo}}">
-  <view class="unlogin-card">
-    <view class="unlogin-head"></view>
-    <view class="unlogin-info">
-      <view class="unlogin-text">未登录</view>
-      <view class="unlogin-tips">点击微信登录后可方便购物</view>
-    </view>
-  </view>
-  <button wx:if="{{locationAuthType==0}}" class="unlogin-btn" open-type='getUserInfo' bindgetuserinfo='onTapLogin'>微信登录</button>
-  <button wx:if="{{locationAuthType==1}}" class="unlogin-btn" open-type='openSetting' bindopensetting="onTapLogin">授权登录</button>
-</view>
-<view class="user-card" wx:else>
-  <view class="user-info">
-    <image class="user-head" src="{{userInfo.avatarUrl}}"></image>
-    <view class="user-name">{{userInfo.nickName}}</view>
-  </view>
-  <view class="user-split"></view>
-  <view class="user-options">
-    <view class="option" bindtap="onTapAddress">
-      <view class="option-title">收货地址</view>
-      <image class="option-arrow" src="/images/grey-arrow.png"></image>
-    </view>
-    <view class="option" bindtap="onTapKf">
-      <view class="option-title">联系客服</view>
-      <image class="option-arrow" src="/images/grey-arrow.png"></image>
-    </view>
-  </view>
-</view> -->

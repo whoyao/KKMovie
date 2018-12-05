@@ -18,36 +18,27 @@ Page({
       title: '加载中...',
     })
 
-    // 读取一部分数据，随机选一条
-    db.collection('movie').get({
+    wx.cloud.callFunction({
+      name: 'getHomeRecommand',
+      data: {
+      },
       success: res => {
-        // console.log(res);
-        let movieRandom = res.data[Math.round(Math.random() * (res.data.length - 1))];
-        let recommandMovie = { recommandMovieName: movieRandom.title, recommandMovieId: movieRandom._id, recommandMovieImg: movieRandom.image}
         this.setData({
-          recommandMovie: recommandMovie,
+          recommandMovie: res.result
         })
-        console.log('[数据库] [查询记录] 成功: ', res)
+        wx.hideLoading()
+        console.log('[云函数] [getHomeRecommand] ', res.result)
+        callback && callback()
       },
       fail: err => {
         wx.showToast({
           icon: 'none',
           title: '数据获取失败'
         })
-        console.error('[数据库] [查询记录] 失败：', err)
+        console.error('[云函数] [getHomeRecommand] 调用失败', err)
+        callback && callback()
       }
     })
-    
-    // console.log(movieRandom)
-
-    wx.hideLoading()
-
-    let comment = { userName: '刘研', userAvatar: '../../images/images/p2517753454.jpg', commentId: '11111' }
-
-    this.setData({
-      comment: comment
-    })
-
     callback && callback()
   },
 

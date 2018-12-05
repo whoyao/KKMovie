@@ -31,7 +31,8 @@ Page({
     chooseMe: false,
     chooseTitle: '收藏的影评▽',
     staredComment: [],
-    myComment: []
+    myComment: [],
+    needBack:''
   },
 
   topSelect(e) {
@@ -75,6 +76,10 @@ Page({
         console.log('[云函数] [', functionName,'] ', res.result)
       },
       fail: err => {
+        wx.showToast({
+          icon: 'none',
+          title: '数据获取失败'
+        })
         console.error('[云函数] [', functionName,'] 调用失败', err)
       }
     })
@@ -84,20 +89,42 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.need_back) {
+      this.setData({
+        needBack: true
+      })
+    } else {
+      this.setData({
+        needBack: false
+      })
+    }
   },
 
   onTapLogin: function () {
+    wx.showLoading({
+      title: '登录中...',
+    })
     app.login({
       success: ({ userInfo }) => {
         this.setData({
           userInfo,
           IDAuthType: app.data.IDAuthType
         })
+        if(this.data.needBack) {
+          wx.navigateBack()
+          return
+        }
         this.refrashPersonPage()
+        wx.hideLoading()
         // console.log(this.data.userInfo)
       },
       error: () => {
         IDAuthType: app.data.IDAuthType
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '登录失败'
+        })
       }
     })
   },
