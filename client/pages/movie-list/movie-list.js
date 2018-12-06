@@ -8,8 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    movieList: '',
-    comment: '',
+    movieList: ''
   },
 
   getMovie(callback) {
@@ -22,6 +21,8 @@ Page({
         this.setData({
           movieList: res.data,
         })
+        wx.hideLoading()
+        callback && callback()
         console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {
@@ -32,18 +33,11 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
-
-    wx.hideLoading()
-
-    let comment = { userName: '刘研', userAvatar: '../../images/images/p2517753454.jpg', commentId: '11111' }
-
-    this.setData({
-      comment: comment
-    })
-
-    callback && callback()
   },
 
+  refresh() {
+    this.getMovie()
+  },
 
   /**
    * 生命周期函数--监听页面加载

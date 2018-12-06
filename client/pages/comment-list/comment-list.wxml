@@ -1,7 +1,7 @@
 <!--pages/comment-list/comment-list.wxml-->
 <view class='main-wrapper'>
 <view class='scroll-wrapper'>
-<scroll-view scroll-y style="height: 100%;">
+<!-- <scroll-view scroll-y style="height: 100%;" bindscrolltoupper="refresh"> -->
   <navigator class='comment-card' wx:for='{{commentList}}' wx:key='_id' url="/pages/comment-detail/comment-detail?id={{item._id}}">
     <view class='user-wrapper'>
       <image class='userhead' src='{{userMap[item.userid].avatar}}' mode='aspectFill'></image>
@@ -20,7 +20,7 @@
       </view>
     </block>
   </navigator>
-</scroll-view>
+<!-- </scroll-view> -->
 </view>
 
 <view class='bottom-wrapper'>

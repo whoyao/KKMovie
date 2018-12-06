@@ -43,12 +43,20 @@ Page({
     })
   },
 
-  refrashPersonPage(){
-    this.refrashPage("me")
-    this.refrashPage("star")
+  refrashPersonPage({sucess, fail}){
+    this.refrashPage({
+      options:"me",
+      sucess: () => {},
+      fail: () => {}
+      })
+    this.refrashPage({
+      options:"star",
+      sucess:sucess,
+      fail:fail
+    })
   },
 
-  refrashPage(options){
+  refrashPage({options,sucess,fail}){
     let functionName = 'getFavirateComment'
     if (options === "me") {
       functionName = 'getPersonComment'
@@ -73,6 +81,7 @@ Page({
             myComment: res.result
           })
         }
+        sucess && sucess()
         console.log('[云函数] [', functionName,'] ', res.result)
       },
       fail: err => {
@@ -80,6 +89,7 @@ Page({
           icon: 'none',
           title: '数据获取失败'
         })
+        fail && fail()
         console.error('[云函数] [', functionName,'] 调用失败', err)
       }
     })
@@ -114,7 +124,12 @@ Page({
           wx.navigateBack()
           return
         }
-        this.refrashPersonPage()
+        this.refrashPersonPage({
+          sucess: ()=>{
+            wx.hideLoading()
+          },
+          fail: ()=>{}
+          })
         wx.hideLoading()
         // console.log(this.data.userInfo)
       },
@@ -140,6 +155,9 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    wx.showLoading({
+      title: '加载中...',
+    })
     // 同步授权状态
     this.setData({
       IDAuthType: app.data.IDAuthType
@@ -149,7 +167,16 @@ Page({
         this.setData({
           userInfo
         })
-        this.refrashPersonPage()
+        if (this.data.needBack) {
+          wx.navigateBack()
+          return
+        }
+        this.refrashPersonPage({
+          sucess: () => {
+            wx.hideLoading()
+          },
+          fail: () => { }
+        })
       }
     })
   },
@@ -172,7 +199,15 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.refrashPersonPage()
+    wx.showLoading({
+      title: '加载中...',
+    })
+    this.refrashPersonPage({
+      sucess: () => {
+        wx.hideLoading()
+      },
+      fail: () => { }
+    })
   },
 
   /**

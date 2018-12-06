@@ -16,10 +16,10 @@
         <view class='button-text'>写影评</view>
       <!-- </navigator> -->
       </view>
-      <view wx:else class='button-wrapper-hidden'>
+      <navigator wx:else class='button-wrapper' url="/pages/comment-detail/comment-detail?movieid={{comment_detail.movieid}}">
         <image class='button-icon' src='../../images/pen.png' mode='aspectFill'></image>
-        <view class='button-text'>写影评</view>
-      </view>
+        <view class='button-text'>我的影评</view>
+      </navigator>
     </view>
   </view>
   <view class='poster-wrapper'>

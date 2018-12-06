@@ -10,10 +10,10 @@
         <image class='button-icon' src='../../images/comments.png' mode='aspectFill'></image>
         <view class='button-text'>添加影评</view>
       </view>
-      <view wx:else class='button-wrapper-hidden' bindtap="popMenu">
+      <navigator wx:else class='button-wrapper' url="/pages/comment-detail/comment-detail?movieid={{movieId}}">
         <image class='button-icon' src='../../images/comments.png' mode='aspectFill'></image>
-        <view class='button-text'>添加影评</view>
-      </view>
+        <view class='button-text'>我的影评</view>
+      </navigator>
     </view>
   </view>
   <view class='poster-wrapper'>

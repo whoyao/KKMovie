@@ -3,6 +3,14 @@ const config = require('../../config.js')
 const db = wx.cloud.database()
 const defaultMovieId = '5c012cbd35b920d5abb7522b'
 
+const _pullDownStatusDic = {
+  invisiable: 0,  //看不见
+  pulling: 1,     //下拉时
+  release: 2,     //可松开刷新时
+  refresing: 3,   //正在刷新
+  finish: 4,      //刷新完成
+}
+
 const string_length = 50
 
 function cutString(input_string) {
@@ -19,6 +27,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    pullDownStatus: 0,
+    lastScrollEnd: 0,
     movieId:'',
     commentList: '',
     userMap:new Object()
@@ -53,6 +63,8 @@ Page({
         console.log('[数据库] [查询记录] 成功: ', res)
         this.cutCommentList()
         this.updateUserMap()
+        wx.hideLoading()
+        callback && callback()
       },
       fail: err => {
         wx.showToast({
@@ -62,15 +74,6 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
-    wx.hideLoading()
-
-    // let comment = { userName: '刘研', userAvatar: '../../images/images/p2517753454.jpg', commentId: '11111' }
-
-    // this.setData({
-    //   comment: comment
-    // })
-
-    callback && callback()
   },
 
   cutCommentList() {
@@ -109,6 +112,9 @@ Page({
     }
   },
 
+  refresh(){
+    this.getComment()
+  },
 
   /**
    * 生命周期函数--监听页面加载
@@ -138,7 +144,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    this.getComment()
   },
 
   /**
@@ -152,7 +158,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    // this.getMovie(wx.stopPullDownRefresh())
+    this.getComment(wx.stopPullDownRefresh())
   },
 
   /**

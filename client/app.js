@@ -162,6 +162,26 @@ App({
     return UserInfo
   },
 
+  checkAuthorizedType({sucess,fail}){
+    wx.getSetting({
+      success: res => {
+        if (!res.authSetting){
+          this.data.IDAuthType = UNPROMPTED
+        } else if (res.authSetting['scope.userInfo']===false) {
+          this.data.IDAuthType = UNAUTHORIZED
+        } else if (res.authSetting['scope.userInfo'] === true) {
+          this.data.IDAuthType = AUTHORIZED
+        }
+        sucess && sucess()
+        console.log('[app][wx.getSetting] 成功', res)
+      },
+      fail: res => {
+        fail && fail()
+        console.error('[app][wx.getSetting] 失败', res)
+      }
+    })
+  },
+
   checkSession({ success, error }) {
     if (UserInfo) {
       let userInfo = UserInfo
@@ -169,22 +189,25 @@ App({
         userInfo
       })
     }
-    wx.checkSession({
-      success: () => {
-        this.getUserInfo({
-          success: res => {
-            userInfo = res.userInfo
-            success && success({
-              userInfo
-            })
-          },
-          fail: () => {
-            error && error()
-          }
-        })
+
+    this.checkAuthorizedType({ 
+      sucess: ()=>{ 
+        if(this.data.IDAuthType === AUTHORIZED) {
+          this.getUserInfo({
+            success: res => {
+              let userInfo = res.userInfo
+              success && success({
+                userInfo
+              })
+            },
+            fail: () => {
+              error && error()
+            }
+          })
+        }
       },
-      fail: () => {
-        error && error()
+      fail: ()=>{
+        error
       }
     })
   }

@@ -50,7 +50,9 @@ Page({
           title: '发布成功'
         })
         setTimeout(() => {
-          wx.navigateBack({})
+          wx.redirectTo({
+            url: '../../pages/comment-list/comment-list?id=' + this.data.movieDetail.id,
+          })
         }, 1500)
       },
         fail: () => {

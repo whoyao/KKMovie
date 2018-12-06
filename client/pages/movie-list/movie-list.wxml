@@ -1,7 +1,7 @@
 <!--pages/movie-list/movie-list.wxml-->
 <view class='main-wrapper'>
 <view class='scroll-wrapper'>
-<scroll-view scroll-y style="height: 100%;">
+<!-- <scroll-view scroll-y style="height: 100%;" bindscrolltoupper="refresh"> -->
   <navigator class='movie-card' wx:for='{{movieList}}' wx:key='id' url="/pages/movie-detail/movie-detail?id={{item._id}}">
     <image class='movie-image' src='{{item.image}}' mode='widthFix'></image>
     <view class='movie-text-wrapper'>
@@ -9,7 +9,7 @@
       <view class='movie-categore'>{{item.category}}</view>
     </view>
   </navigator>
-</scroll-view>
+<!-- </scroll-view> -->
 </view>
 
 <view class='bottom-wrapper'>

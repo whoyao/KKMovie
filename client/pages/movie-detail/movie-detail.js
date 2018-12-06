@@ -33,6 +33,7 @@ Page({
         this.setData({
           movieDetail: movieDetail
         })
+        wx.hideLoading()
         console.log('[数据库] [查询记录] 成功: ', res)
       },
       fail: err => {
@@ -43,8 +44,6 @@ Page({
         console.error('[数据库] [查询记录] 失败：', err)
       }
     })
-
-    wx.hideLoading()
 
   },
 

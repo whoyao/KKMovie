@@ -62,7 +62,7 @@ Page({
         userid: this.data.userInfo.openid,
         comment_url:''
       },
-      success: function (res) {
+      success: res=> {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
         wx.hideLoading()
         let errMsg = res.errMsg
@@ -71,7 +71,10 @@ Page({
             title: '发布成功'
           })
           setTimeout(() => {
-            wx.navigateBack({})
+            // console.log(movieid)
+            wx.redirectTo({
+              url: '../../pages/comment-list/comment-list?id=' + this.data.movieDetail.id,
+            })
           }, 1500)
         } else {
           wx.showToast({
@@ -81,7 +84,7 @@ Page({
         }
         console.log('[数据库] 操作成功', res)
       },
-      fail: function (res) {
+      fail: res=> {
         wx.hideLoading()
         wx.showToast({
           icon: 'none',
@@ -101,39 +104,6 @@ Page({
   tapSend(event) {
     this.addComment()
   },
-
-
-  getMovieDetail() {
-    wx.showLoading({
-      title: '加载中...',
-    })
-
-    db.collection('movie').doc(this.data.movieId).get({
-      success: res => {
-        let movie = res.data
-        let movieName = movie.title
-        let movieDescribe = movie.description
-        let movieImg = movie.image
-        let movieDetail = { movieName: movieName, movieDescribe: movieDescribe, movieImg: movieImg }
-
-        this.setData({
-          movieDetail: movieDetail
-        })
-        console.log('[数据库] [查询记录] 成功: ', res)
-      },
-      fail: err => {
-        wx.showToast({
-          icon: 'none',
-          title: '数据获取失败'
-        })
-        console.error('[数据库] [查询记录] 失败：', err)
-      }
-    })
-
-    wx.hideLoading()
-
-  },
-
 
 
   /**

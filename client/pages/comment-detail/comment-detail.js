@@ -11,6 +11,7 @@ Page({
    */
   data: {
     comment_id: '',
+    movie_id: '',
     comment_detail: '',
     userInfo: '',
     show_star: true,
@@ -46,7 +47,7 @@ Page({
     wx.cloud.callFunction({
       name: 'getCommentDetail',
       data: {
-        comment_id: this.data.comment_id
+        comment_id: this.data.comment_id,
       },
       success: res => {
         this.setData({
@@ -55,7 +56,7 @@ Page({
         if (this.data.comment_detail.comment_type === "audio") {
           this.getAudio(this.data.comment_detail.comment_url)
         }
-        wx.hideLoading()
+        this.getButtonStatus({ sucess: wx.hideLoading(), sucess: wx.hideLoading()})
         console.log('[云函数] [getCommentDetail] ', res.result)
       },
       fail: err => {
@@ -69,7 +70,39 @@ Page({
     })
   },
 
-  getButtonStatus() {
+  getUserCommentDetail() {
+    wx.showLoading({
+      title: '加载中...',
+    })
+    wx.cloud.callFunction({
+      name: 'getUserCommentDetail',
+      data: {
+        movie_id: this.data.movie_id
+      },
+      success: res => {
+        this.setData({
+          comment_detail: res.result,
+          comment_id: res.result._id
+        })
+        if (this.data.comment_detail.comment_type === "audio") {
+          this.getAudio(this.data.comment_detail.comment_url)
+        }
+        this.getButtonStatus({ sucess: wx.hideLoading(), sucess: wx.hideLoading() })
+        console.log('[云函数] [getUserCommentDetail] ', res.result)
+      },
+      fail: err => {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '数据获取失败'
+        })
+        console.error('[云函数] [getUserCommentDetail] 调用失败', err)
+      }
+    })
+  },
+
+  getButtonStatus({ sucess, fail }) {
+    console.log("here 1#")
     wx.cloud.callFunction({
       name: 'getCDButtonStatus',
       data: {
@@ -80,10 +113,12 @@ Page({
           show_star: res.result.show_star,
           show_add: res.result.show_add
         })
+        sucess && sucess()
         console.log('[云函数] [getCDButtonStatus] ', res.result)
         console.log('[show_star] ', this.data.show_star, '[show_add] ', this.data.show_add)
       },
       fail: err => {
+        fail && fail()
         console.error('[云函数] [getCDButtonStatus] 调用失败', err)
       }
     })
@@ -197,9 +232,7 @@ Page({
         playProgress: 100
       })
     })
-    this.setData({
-      comment_id : options.id
-    })
+    
     app.checkSession({
       success: ({ userInfo }) => {
         this.setData({
@@ -207,7 +240,19 @@ Page({
         })
       }
     })
-    this.getCommentDetail()
+    if (options.id) {
+      this.setData({
+        comment_id: options.id,
+        movie_id:''
+      })
+      this.getCommentDetail()
+    } else {
+      this.setData({
+        movie_id: options.movieid,
+        comment_id: ''
+      })
+      this.getUserCommentDetail()
+    }
   },
 
   /**
@@ -221,7 +266,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getButtonStatus()
+    // this.getButtonStatus()
     this.setData({
       showMenu:false
     })
